@@ -1,7 +1,3 @@
-module example
-
-require gee v0.0.0
-
-replace gee => ./gee
+module Gee-Web
 
 go 1.20

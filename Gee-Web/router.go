@@ -63,16 +63,16 @@ func (r *router) handler(c *Context) {
 
 	fmt.Println(relativePath)
 
-	if relativePath == "" {
-		c.String(http.StatusNotFound, "404 NOT FOUND: %s\n", c.Path)
-	}
-
-	key := c.Method + "-" + relativePath
-	c.Params = params
-
-	if handler, ok := r.handlers[key]; ok {
-		handler(c)
+	//匹配路径添加路径函数
+	if relativePath != "" {
+		key := c.Method + "-" + relativePath
+		c.Params = params
+		c.handlers = append(c.handlers, r.handlers[key])
 	}else{
-		c.String(http.StatusNotFound, "404 NOT FOUND: %s\n", c.Path)
+		c.handlers = append(c.handlers, func(c *Context) {
+			c.String(http.StatusNotFound, "404 NOT FOUND: %s\n", c.Path)
+		})
 	}
+
+	c.Next()
 }

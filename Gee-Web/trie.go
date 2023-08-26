@@ -33,7 +33,7 @@ func (stack *Stack) Pop() *Node {
 	return stack.nodeList[stack.length]
 }
 
-func (stack *Stack) getLength() int {
+func (stack *Stack) GetLength() int {
 	return stack.length
 }
 
