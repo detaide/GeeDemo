@@ -1,17 +1,23 @@
 package main
 
 import (
-	"gee"
-	"net/http"
+	"fmt"
+	"gee/ORM"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
-	r := gee.Default()
-	
-	r.GET("/", func(ctx *gee.Context) {
-		ctx.String(http.StatusOK, "Hello World")
-	})
+	engine, _ := geeorm.NewEngine("sqlite3", "gee.db")
+	defer engine.Close()
 
-	r.Run(":8080")
+	s := engine.NewSession()
 
+	_, _ = s.Raw("DROP TABLE IF EXISTS User;").Exec()
+    _, _ = s.Raw("CREATE TABLE User(Name text);").Exec()
+    _, _ = s.Raw("CREATE TABLE User(Name text);").Exec()
+
+	result, _ := s.Raw("INSERT INTO User(`Name`) values (?), (?)", "Tom", "Sam").Exec()
+	count, _ := result.RowsAffected()
+	fmt.Println(count)
 }
