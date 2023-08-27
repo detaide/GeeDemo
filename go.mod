@@ -1,3 +1,3 @@
-module Gee-Web
+module gee
 
 go 1.20

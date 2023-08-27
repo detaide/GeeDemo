@@ -1,7 +1,6 @@
-package gee
+package router
 
 import (
-	// "gee/middlewares"
 	"log"
 	"net/http"
 	"strings"
